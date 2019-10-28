@@ -34,8 +34,11 @@ var listener = app.listen(process.env.PORT, function () {
 // my App starts here...
 
 app.get('/api/timestamp/:date_string?',(req,res)=>{
-  let newDate;
-  !req.params.date_string ? newDate= new Date()
-    : newDate = new Date(req.params.date_string)
+   let input = req.params.date_string
+  let newDate = new Date()
+  !input ? newDate
+    :Number(input) 
+      ? newDate.setTime(input) 
+      :newDate = new Date(input)
   res.json({"unix" : newDate.getTime(),"utc" : newDate.toUTCString()})
 })
